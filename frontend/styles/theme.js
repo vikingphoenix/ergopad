@@ -35,10 +35,10 @@ theme.typography.h1 = {
   fontSize: '5.35rem',
   lineHeight: '1.167',
   color: theme.palette.text.primary,
-  fontFamily: "'Red Hat Display', sans-serif",
+  fontFamily: "Red Hat Display, sans-serif",
   fontWeight: '800',
   letterSpacing: '-0.02em',
-  marginBottom: '1rem',
+  marginBottom: '2rem',
   '@media (max-width:880px)': {
     fontSize: '4.71rem',
   },
@@ -51,10 +51,10 @@ theme.typography.h1 = {
 };
 theme.typography.h2 = {
   color: theme.palette.text.primary,
-  fontFamily: "'Red Hat Display', sans-serif",
+  fontFamily: 'Red Hat Display, sans-serif',
   fontWeight: '800',
   fontSize: '3.5rem',
-  marginBottom: '1rem',
+  marginBottom: '1.7rem',
   '@media (max-width:880px)': {
     fontSize: '2.63rem',
   },
@@ -63,31 +63,31 @@ theme.typography.h2 = {
 }
 theme.typography.h3 = {
   color: theme.palette.text.primary,
-  fontFamily: "'Red Hat Display', sans-serif",
+  fontFamily: 'Red Hat Display, sans-serif',
   fontWeight: '800',
 }
 theme.typography.h4 = {
   color: theme.palette.text.primary,
-  fontFamily: "'Red Hat Display', sans-serif",
+  fontFamily: 'Red Hat Display, sans-serif',
   fontWeight: '800',
 }
 theme.typography.h5 = {
   color: theme.palette.text.primary,
-  fontFamily: "'Red Hat Display', sans-serif",
+  fontFamily: 'Red Hat Display, sans-serif',
   fontWeight: '800',
 }
 theme.typography.h6 = {
   color: theme.palette.text.primary,
-  fontFamily: "'Red Hat Display', sans-serif",
+  fontFamily: 'Red Hat Display, sans-serif',
   fontWeight: '800',
 }
 
 theme.typography.subtitle1 = {
   fontSize: '1.25rem',
   lineHeight: '1.5',
-  marginBottom: '1rem',
+  marginBottom: '1.5rem',
   fontWeight: '400',
-  fontFamily: "'Inter', sans-serif",
+  fontFamily: 'Inter, sans-serif',
   color: theme.palette.text.secondary
 }
 

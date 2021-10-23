@@ -36,6 +36,10 @@ const Navbar = ({ navLinks }) => {
                     color: 'white',
                   },
                   textTransform: 'none',
+                  fontWeight: '500',
+                  fontSize: '1rem',
+                  px: '0.5rem',
+                  py: '2rem'
                 }}
                 underline='none'
               >
