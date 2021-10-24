@@ -4,12 +4,12 @@ const Faq = () => {
   return (
     <>
         <Box sx={{ maxWidth: '760px', mx: 'auto' }}>
-            <Box sx={{ mt: '5rem'}}>
+            <Box sx={{ mt: '5rem' }}>
                 <Typography variant="h1">
                     ErgoPad FAQ
                 </Typography>
                 <Typography variant="subtitle1">
-                    If we get asked a question often, you'll find it answered here
+                    If we get asked a question often, you&apos;ll find it answered here
                 </Typography>
                 <Divider sx={{ width: '2rem' }} />
             </Box>

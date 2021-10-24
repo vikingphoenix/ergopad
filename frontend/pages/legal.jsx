@@ -4,7 +4,7 @@ const Legal = () => {
   return (
     <>
         <Box sx={{ maxWidth: '760px', mx: 'auto' }}>
-            <Box sx={{ mt: '5rem'}}>
+            <Box sx={{ mt: '5rem' }}>
                 <Typography variant="h1">
                     Legal Info
                 </Typography>

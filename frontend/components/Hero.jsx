@@ -17,7 +17,7 @@ const Hero = ({ title, subtitle }) => {
         </Typography>
 
         <Box sx={{ textAlign: 'center', mb: '3rem' }}>
-          <a href="http://t.me/ergopad" target="_blank">
+          <a href="http://t.me/ergopad" target="_blank" rel="noreferrer">
             <Button 
               variant="contained"
               sx={{
@@ -41,7 +41,7 @@ const Hero = ({ title, subtitle }) => {
             </Button>
           </a>
 
-          <a href="https://discord.gg/ZpCqFCjT4g" target="_blank">
+          <a href="https://discord.gg/ZpCqFCjT4g" target="_blank" rel="noreferrer">
             <Button 
               variant="contained"
               sx={{

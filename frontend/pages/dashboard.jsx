@@ -6,7 +6,7 @@ import { VictoryArea, VictoryContainer, VictoryPie } from 'victory';
 import axios from 'axios';
 import { useAuth } from 'src/auth';
 
-const rawData = 
+/* const rawData = 
 {
   "address": "9fPRvaMYzBPotu6NGvZn4A6N4J2jDmRGs4Zwc9UhFFeSXgRJ8pS",
   "balance": {
@@ -97,8 +97,8 @@ const rawData =
       "price": 10.3
     }
   }
-};
-/* 
+}; */
+
 const rawData = 
 {
   "address": "9fPRvaMYzBPotu6NGvZn4A6N4J2jDmRGs4Zwc9UhFFeSXgRJ8pS",
@@ -126,7 +126,7 @@ const rawData =
       "price": 10.3
     }
   }
-}; */
+}; 
 
 const historicData = [
 { x: 1, y: 2 },
@@ -180,7 +180,7 @@ const Dashboard = () => {
     };
 
     const res = await axios
-      .get(`http://localhost:8000/api/asset/balance/${walletInput}`, { ...defaultOptions })
+      .get(`https://ergopad.io/api/asset/balance/${walletInput}`, { ...defaultOptions })
       .catch((err) => {
         console.log('ERROR FETCHING: ', err);
       });

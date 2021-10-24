@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
   return (
     <>
         <Box sx={{ maxWidth: '760px', mx: 'auto' }}>
-            <Box sx={{ mt: '5rem'}}>
+            <Box sx={{ mt: '5rem' }}>
                 <Typography variant="h1">
                     Privacy Policy
                 </Typography>
