@@ -15,18 +15,18 @@ const Homepage = () => {
     </>
   );
 };
-
+/* 
 <style jsx global>{`
   html,
   body {
     padding: 0;
     margin: 0;
-    font-family: 'Inter', sans-serif;
+    font-family: Inter, sans-serif;
   }
 
   * {
     box-sizing: border-box;
   }
-`}</style>
+`}</style> */
 
 export default Homepage;

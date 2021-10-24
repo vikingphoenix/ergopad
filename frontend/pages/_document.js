@@ -3,8 +3,6 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import createEmotionCache from '../styles/createEmotionCache';
 
-import theme from '../styles/theme';
-
 export default class MyDocument extends Document {
   render() {
     return (
@@ -13,7 +11,7 @@ export default class MyDocument extends Document {
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossoorigin="true" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&display=swap" rel="stylesheet"></link>
-          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;800&family=Red+Hat+Display:wght@800&display=swap" rel="stylesheet"></link>
+          <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@800&display=swap" rel="stylesheet"></link>
         </Head>
         <body>
           <Main />

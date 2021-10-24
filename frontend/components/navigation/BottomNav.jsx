@@ -15,7 +15,7 @@ import SideDrawer from '../SideDrawer';
 const navLinks = [
   {
     label: 'Token',
-    link: '/token-info',
+    link: '/token',
     icon: <FiberSmartRecordOutlined />,
   },
   {

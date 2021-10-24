@@ -1,15 +1,15 @@
 import { Typography, Box, Divider } from '@mui/material';
 
-const About = () => {
+const PrivacyPolicy = () => {
   return (
     <>
         <Box sx={{ maxWidth: '760px', mx: 'auto' }}>
             <Box sx={{ mt: '5rem'}}>
                 <Typography variant="h1">
-                    About ErgoPad
+                    Privacy Policy
                 </Typography>
                 <Typography variant="subtitle1">
-                    Learn more about the project
+                    Any data we collect is protected. 
                 </Typography>
                 <Divider sx={{ width: '2rem' }} />
             </Box>
@@ -35,4 +35,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default PrivacyPolicy;

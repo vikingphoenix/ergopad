@@ -1,15 +1,15 @@
 import { Typography, Box, Divider } from '@mui/material';
 
-const About = () => {
+const Contact = () => {
   return (
     <>
         <Box sx={{ maxWidth: '760px', mx: 'auto' }}>
             <Box sx={{ mt: '5rem'}}>
                 <Typography variant="h1">
-                    About ErgoPad
+                    Get in touch with the ErgoPad team
                 </Typography>
                 <Typography variant="subtitle1">
-                    Learn more about the project
+                    We are always happy to answer your questions and consider any suggestions. Get in touch with the form below. 
                 </Typography>
                 <Divider sx={{ width: '2rem' }} />
             </Box>
@@ -35,4 +35,4 @@ const About = () => {
   );
 };
 
-export default About;
+export default Contact;

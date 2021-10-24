@@ -136,12 +136,6 @@ const historicData = [
 { x: 5, y: 6}
 ];
 
-
-let imgNftList = [];
-let audNftList = [];
-let newAssetList = [];
-
-
 const wantedHoldingData = tokenDataArray(rawData);
 
 console.log(wantedHoldingData);
@@ -158,14 +152,13 @@ const defaultHoldingData = wantedHoldingData.map((item) => {
 });
 defaultHoldingData[defaultHoldingData.length - 1].y = portfolioValue;
 
-
-
-
 const Dashboard = () => {
   const auth = useAuth();
   const [holdingData, setHoldingData] = useState(defaultHoldingData);
   const [walletInput, setWalletInput] = useState('');
   const [assetList, setAssetList] = useState(assetListArray(rawData));
+  const [imgNftList, setImgNftList] = useState([]);
+  const [audNftList, setAudNftList] = useState([]);
 
   useEffect(() => {
     setHoldingData(wantedHoldingData); // Setting the data that we want to display
@@ -193,17 +186,15 @@ const Dashboard = () => {
       });
     if (res?.data) {
       let victoryData = tokenDataArray(res.data);
-      // victoryData is data going into the chart, that's sorted
-      // set chart data state for pie chart
-      setHoldingData(victoryData);
 
-      
       let portfolioTotal = sumTotals(victoryData);
 
       // create list of assets 
       let initialAssetList = assetListArray(res.data);
 
-      
+      let newImgNftList = [];
+      let newAudNftList = [];
+      let newAssetList = [];
 
       for(let i = 0; i < initialAssetList.length; i++){
         if (initialAssetList[i].id != 'ergid') {
@@ -229,31 +220,30 @@ const Dashboard = () => {
                 amountUSD: initialAssetList[i].amountUSD ? initialAssetList[i].amountUSD : ''
               }
 
-              console.log(tokenObject.r9);
+              // console.log(tokenObject.r9);
               
               // if audio NFT
               if (tokenObject.ext == '.mp3' || tokenObject.ext == '.ogg' || tokenObject.ext == '.wma' || tokenObject.ext == '.wav' || tokenObject.ext == '.aac' || tokenObject.ext == 'aiff' || tokenObject.r7 == '0e020102'){
-                audNftList[audNftList.length] = tokenObject;
+                newAudNftList[newAudNftList.length] = tokenObject;
               }
-              else if (tokenObject.ext == '.png' || tokenObject.ext == '.gif' || tokenObject.ext == '.jpg' || tokenObject.ext == 'jpeg' || tokenObject.ext == '.bmp' || tokenObject.ext == '.svg' || tokenObject.ext == '.raf' || tokenObject.ext == '.nef' || tokenObject.r7 == '0e020102' || tokenObject.r7 == '0e0430313031' ) {
-                imgNftList[imgNftList.length] = tokenObject;
+              // if image NFT
+              else if (tokenObject.ext == '.png' || tokenObject.ext == '.gif' || tokenObject.ext == '.jpg' || tokenObject.ext == 'jpeg' || tokenObject.ext == '.bmp' || tokenObject.ext == '.svg' || tokenObject.ext == '.raf' || tokenObject.ext == '.nef' || tokenObject.r7 == '0e020101' || tokenObject.r7 == '0e0430313031' ) {
+                newImgNftList[newImgNftList.length] = tokenObject;
               }
               else {
                 newAssetList[newAssetList.length] = tokenObject;
               }
-          } 
+          }
         }
         else {
           newAssetList[newAssetList.length] = initialAssetList[i];
         }
       };
-
       
-
+      setHoldingData(victoryData);
       setAssetList(newAssetList);
-
-      // set state for asset list
-      
+      setAudNftList(newAudNftList);
+      setImgNftList(newImgNftList);
 
       // console.log(res.data);
       // console.log(victoryData);
@@ -261,7 +251,8 @@ const Dashboard = () => {
       // console.log(portfolioTotal);
     }
 
-    setWalletInput(walletInput);
+    
+    // setWalletInput(walletInput);
   };
 
   return (

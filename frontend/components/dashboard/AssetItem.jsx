@@ -43,8 +43,8 @@ const AssetItem = ({ asset, stableDenominator = 'USD' }) => {
     <StyledAsset className='asset'>
       <AssetIcon src={asset?.r9 ?? '/tokenplaceholder.png'} />
       <AssetNameContainer>
-        <Typography>{asset.token}</Typography>
-        <Typography variant='caption'>{asset.name}</Typography>
+        {/* <Typography>{asset.token}</Typography> */}
+        <Typography>{asset.name}</Typography>
       </AssetNameContainer>
       <AssetAmountContainer>
         <Typography>{asset.amount}</Typography>

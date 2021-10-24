@@ -2,7 +2,8 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Link from '@components/MuiNextLink';
 import { List, ListItem, Box } from '@mui/material';
-import { styled } from '@mui/system';
+import { styled, useTheme } from '@mui/system';
+// import theme from '../styles/theme';
 
 const BackgroundContainer = styled('div')(({ theme }) => ({
   zIndex: '-100',
@@ -42,22 +43,17 @@ const Footer = () => {
           <Typography variant='inherit' sx={titleStyles}>COMPANY</Typography>
           <List>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='/about' sx={linkStyles}>
                 About
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
-                Press
-              </Link>
-            </ListItem>
-            <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='/legal' sx={linkStyles}>
                 Legal
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='/contact' sx={linkStyles}>
                 Contact
               </Link>
             </ListItem>
@@ -67,22 +63,22 @@ const Footer = () => {
           <Typography variant='inherit' sx={titleStyles}>SUPPORT</Typography>
           <List>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='/documentation' sx={linkStyles}>
                 Documentation
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='/guides' sx={linkStyles}>
                 Tutorials & Guides
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='/faq' sx={linkStyles}>
                 FAQ
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='https://github.com/ergopad' sx={linkStyles}>
                 Open Source
               </Link>
             </ListItem>
@@ -92,28 +88,18 @@ const Footer = () => {
           <Typography variant='inherit' sx={titleStyles}>SOCIAL</Typography>
           <List>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='https://t.me/ergopad_chat' sx={linkStyles} target='_blank'>
                 Telegram
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='https://t.me/ergopad' sx={linkStyles} target='_blank'>
                 Announcements
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='https://discord.gg/QHrbwrR9' sx={linkStyles} target='_blank'>
                 Discord
-              </Link>
-            </ListItem>
-            <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
-                Twitter
-              </Link>
-            </ListItem>
-            <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
-                Medium
               </Link>
             </ListItem>
           </List>
@@ -122,22 +108,22 @@ const Footer = () => {
           <Typography variant='inherit' sx={titleStyles}>ERGO RESOURCES</Typography>
           <List>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='https://ergoplatform.org/en/' sx={linkStyles} target='_blank'>
                 Official Website
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='https://ergodex.io/' sx={linkStyles} target='_blank'>
                 ErgoDex
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='https://ergoplatform.org/en/blog/2021-04-26-the-ergo-manifesto/' sx={linkStyles} target='_blank'>
                 Ergo Manifesto
               </Link>
             </ListItem>
             <ListItem disableGutters sx={listItemStyles}>
-              <Link activeClassName='active' href='/' sx={linkStyles}>
+              <Link activeClassName='active' href='https://github.com/ergoplatform/ergo-appkit' sx={linkStyles} target='_blank'>
                 AppKit
               </Link>
             </ListItem>
@@ -150,11 +136,11 @@ const Footer = () => {
           <Typography variant='inherit' sx={textStyles}>© 2021 ErgoPad. All rights reserved.</Typography>
         </Grid>
         <Grid item xs={12} md={4} sx={{ textAlign: { xs: 'center', md: 'center' } }}>
-          <Link activeClassName='active' href='/' sx={linkStyles}>
+          <Link activeClassName='active' href='/terms' sx={linkStyles}>
             Terms
           </Link>{' '}
           ·{' '}
-          <Link activeClassName='active' href='/' sx={linkStyles}>
+          <Link activeClassName='active' href='/privacypolicy' sx={linkStyles}>
             Privacy Policy
           </Link>
         </Grid>
