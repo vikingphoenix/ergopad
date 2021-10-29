@@ -1,7 +1,7 @@
 # FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
 FROM python:3
 
-COPY ./app /app
+COPY ./aggregator/app /app
 WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -14,7 +14,6 @@ RUN apt-get update \
 
 # install python dependencies
 RUN pip install --upgrade pip
-COPY ./app/requirements.txt .
 RUN pip install -r requirements.txt
 
 CMD ["python3", "main.py"]
