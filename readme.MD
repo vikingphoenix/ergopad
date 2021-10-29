@@ -21,3 +21,22 @@ You can now change anything in the frontend folder and it will automatically ref
 To make changes to backend, it's a good idea to reset the docker with `ctrl-C` if you're following the docker logs, or `docker-compose stop` in a fresh terminal. Then run `docker-compose up` to start it again. 
 
 If `alembic upgrade head` doesnt work, or you just need a fresh database, run `docker-compose down`
+
+example .env:
+```
+BACKEND_PORT=8000
+
+REDIS_PORT=6379
+
+POSTGRES_PORT=5432
+POSTGRES_USER=hello
+POSTGRES_PASS=world
+
+PGADMIN_PORT=5050
+PGADMIN_EMAIL=hello@world.com
+PGADMIN_PASS=gr33tings
+
+FLOWER_PORT=5555
+
+NGINX_PORT=8000
+```
