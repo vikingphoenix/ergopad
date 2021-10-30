@@ -4,27 +4,28 @@ import numpy as np
 # import tasks
 
 from sqlalchemy import create_engine
+from argparse import ArgumentParser
 
 ### NOTES
 """
 Read OHLCV+ data from exchange and store in database.  The data will be created if it 
-does not exist, otherwise appended.  Each exchange/ticker will have it's own table since
+does not exist, otherwise appended.  Each exchange/symbol will have it's own table since
 this is likely to be called async and from a celery worker.
 
-TODO: ability to include exchange as column to be able to store multi tickers same table
+TODO: ability to include exchange as column to be able to store multi symbols same table
 TODO: automate with CLI params; call from celery workers
 TODO: to use async, must include await methods
 
 Helpers:
 ----------
-find tickers with string
+find symbols with string
 > list(filter(None, [m if (m.find('ERG') != -1) else None for m in ccxt.hitbtc().load_markets()]))
 
-get ticker in form for database
-> pd.DataFrame.from_dict(ccxt.hitbtc().fetch_ticker('ERG/BTC'), orient='index').drop('info').T
+get symbol in form for database
+> pd.DataFrame.from_dict(ccxt.hitbtc().fetch_symbol('ERG/BTC'), orient='index').drop('info').T
 
-if pulling from ticker, can use this to format as dataframe
-> df = pd.DataFrame.from_dict(exchange.fetch_ticker(ticker), orient='index')
+if pulling from symbol, can use this to format as dataframe
+> df = pd.DataFrame.from_dict(exchange.fetch_symbol(symbol), orient='index')
 > df = df.drop('info') # ignore
 > df.T.to_sql(tbl, con=con, if_exists='append') # transpose dataframe with default cols from ccxt
 
@@ -32,7 +33,7 @@ Initial:
 ---------
 frm = exchange.parse8601('2021-10-20 00:00:00')
 now = exchange.milliseconds()
-ticker = 'ERG/USDT'
+symbol = 'ERG/USDT'
 data = []
 msec = 1000
 minute = 60 * msec
@@ -41,7 +42,7 @@ hold = 30
 while from_timestamp < now:
     try:
         print(exchange.milliseconds(), 'Fetching candles starting from', exchange.iso8601(from_timestamp))
-        ohlcvs = exchange.fetch_ohlcv(ticker, '1m', from_timestamp)
+        ohlcvs = exchange.fetch_ohlcv(symbol, '1m', from_timestamp)
         print(exchange.milliseconds(), 'Fetched', len(ohlcvs), 'candles')
         from_timestamp = ohlcvs[-1][0]
         data += ohlcvs
@@ -55,14 +56,30 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
-POSTGRES_PORT = 5432 # os.getenv('POSTGRES_PORT')
+parser = ArgumentParser(description='ready, go.')
+parser.add_argument('-t', '--timeframe', default='5m', choices=['1m', '5m', '1d', '1w'], help='common interval between candles')
+parser.add_argument('-s', '--symbol', default='ERG/USDT', help='crypto symbol available on exchange')
+parser.add_argument('-x', '--exchange', default='coinex', choices=ccxt.exchanges, help='exchange to gather candles')
+parser.add_argument('-l', '--limit', default=1000, type=int, help='exchange to gather candles')
+args = parser.parse_args()
+exchangeName = args.exchange
+symbol = args.symbol
+timeframe = args.timeframe
+limit = args.limit
 
-COINEX_ACCESS_ID = '8CD70BBCE0544FAAB454A3638A769EC0'
-COINEX_SECRET_KEY = 'A7A7988516DD784E78742D21CB732A2291C04AD203F478F1'
+POSTGRES_PORT = 5432 # os.getenv('POSTGRES_PORT')
+apiKeys = {
+    'coinex': {
+        'ACCESS_ID': '8CD70BBCE0544FAAB454A3638A769EC0',
+        'SECRET_KEY': 'A7A7988516DD784E78742D21CB732A2291C04AD203F478F1'
+    }
+}
+ACCESS_ID = apiKeys[exchangeName]['ACCESS_ID']
+SECRET_KEY = apiKeys[exchangeName]['SECRET_KEY']
 
 ### LOGGING
 import logging
-level = logging.DEBUG # TODO: set from .env
+level = logging.ERROR # TODO: set from .env
 logging.basicConfig(format="%(asctime)s %(levelname)s %(threadName)s %(name)s %(message)s", datefmt='%m-%d %H:%M', level=level)
 
 ### INIT
@@ -72,13 +89,11 @@ dbn = 'hello'
 con = create_engine(f'postgresql://{usr}:{pwd}@postgres:{POSTGRES_PORT}/{dbn}')
 
 # for xcg in ccxt.exchanges: ...
-exchangeName = 'coinex' # exchangeName = 'hitbtc'
-apiKey = COINEX_ACCESS_ID
-secret = COINEX_SECRET_KEY
-exchange = getattr(ccxt, exchangeName)(apikey, secret) # exchange = eval(f'ccxt.{exchangeName}()') # alternative using eval
+apiKey = ACCESS_ID
+secret = SECRET_KEY
+exchange = getattr(ccxt, exchangeName)({'apiKey': apiKey, 'secret': secret}) # exchange = eval(f'ccxt.{exchangeName}()') # alternative using eval
 
-
-def getLatestTimestamp(tbl, removeLatest = True):
+def getLatestTimestamp(tbl, since='1970-01-01T00:00:00Z', removeLatest=True):
     """
     Find last imported row and remove
     """
@@ -87,38 +102,46 @@ def getLatestTimestamp(tbl, removeLatest = True):
         dfLatest = pd.read_sql(sql=sqlLatest, con=con)
     
         # from ccxt docs, indicates last close value may be inaccurate
-        utcLatest = dfLatest.iloc[0]['timestamp_utc']
+        since = dfLatest.iloc[0]['timestamp_utc']
 
         # remove latest to avoid dups and provide more accurate closing value
         if removeLatest:
-            sqlRemoveLatest = f'delete from "{tbl}" where timestamp_utc = {utcLatest}'
+            sqlRemoveLatest = f"""delete from "{tbl}" where timestamp_utc = '{since}'"""
             res = con.execute(sqlRemoveLatest, con=con)
             if res == 0:
                 logging.warning('No rows deleted; maybe table is blank, or issue with latest timestamp_utc')
-        
-        return utcLatest
+
+        return exchange.parse8601(since.isoformat())
 
     except Exception as e: # consider narrowing exception handing from generic, "Exception"
-        logging.warning(f'table, {tbl} may not exist, or connection to SQL invalid.')
+        logging.error(f'table, {tbl} may not exist, or connection to SQL invalid.')
         pass
 
     return 0
 
-def getLatestOHLCV(exchange, ticker):
+def getLatestOHLCV(exchange, symbol, since=None):
     """
     Find the latest X rows of ohlcv data from exchange and save to SQL
     """
+    data = []
+    limit = 1000
+    timeframe = '5m'
+    tf_milliseconds = 5*60*1000
     try:
         if exchange.has['fetchOHLCV']:
-            # get latest ohlcv from exchange
-            ohlcv = exchange.fetch_ohlcv(ticker)
-            return ohlcv
+            # paginate latest ohlcv from exchange
+            if since == None:
+                since  = exchange.milliseconds() - 86400000 # 1 day
 
-        else:
-            return None
+            while since < exchange.milliseconds()-tf_milliseconds:
+                print(f'since: {since}...')
+                data += exchange.fetch_ohlcv(symbol, timeframe=timeframe, since=since, limit=limit)
+                since = int(data[len(data)-1][0])
 
     except Exception as e:
         logging.debug(e)
+
+    return data
 
 def putLatestOHLCV(ohlcv, tbl, utcLatest):
     """
@@ -128,7 +151,7 @@ def putLatestOHLCV(ohlcv, tbl, utcLatest):
         # save ohlcv to sql
         columns = ['timestamp_utc', 'open', 'high', 'low', 'close', 'volume']
         df = pd.DataFrame(np.row_stack(ohlcv), columns=columns)
-        dfLatest = df[df['timestamp_utc'] >= utcLatest].astype({'timestamp_utc': 'int64'}).set_index('timestamp_utc')
+        dfLatest = df[df['timestamp_utc'] >= utcLatest].astype({'timestamp_utc': 'datetime64[ms]'}).set_index('timestamp_utc')
         dfLatest.to_sql(tbl, con=con, if_exists='append', index_label='timestamp_utc')
 
     except Exception as e:
@@ -137,19 +160,15 @@ def putLatestOHLCV(ohlcv, tbl, utcLatest):
 ### MAIN
 if (__name__ == '__main__'):
     
-    # ERGO, for now
-    ticker = 'ERG/BTC' # TODO: cli
-    tbl = f'{exchangeName}_{ticker}'
+    # destination
+    tbl = f'{exchangeName}_{symbol}_{timeframe}'
 
     # get latest timestamp; remove from table, if exists
-    utcLatest = getLatestTimestamp(tbl)
-    logging.debug(f'UTCLATEST: {utcLatest}')
+    since = getLatestTimestamp(tbl)
     
     # get lastest X OHLCV
-    ohlcv = getLatestOHLCV(exchange, ticker)
+    # ohlcv = getLatestOHLCV(exchange, symbol) # TODO: pagination
+    ohlcv = exchange.fetch_ohlcv(symbol, timeframe=timeframe, since=since, limit=limit) # coinex buggy with, "since" -hack
 
     # save most recent OHLCV to SQL
-    putLatestOHLCV(ohlcv, tbl, utcLatest)
-
-    # fin
-    logging.debug('the end.')
+    putLatestOHLCV(ohlcv, tbl, since)
