@@ -12,7 +12,7 @@ let theme = createTheme({
       main: 'rgb(162, 162, 168)',
     },
     background: {
-      paper: 'rgb( 29, 29, 32 )',
+      paper: 'rgba(46, 46, 51)',
       default: 'rgb( 29, 29, 32 )',
     },
     text: {
@@ -104,6 +104,5 @@ theme.typography.p = {
   marginTop: '2rem',
   display: 'block'
 }
-
     
 export default theme;
