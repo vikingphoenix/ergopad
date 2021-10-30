@@ -47,7 +47,7 @@ services:
     image: postgres:14-alpine
     restart: always
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data:cached
     env_file:
       - .env
     environment:
@@ -74,7 +74,7 @@ services:
     environment:
       - PGADMIN_LISTEN_PORT=${PGADMIN_PORT}
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
-      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASS} # 3rg0h@cK!
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASS}
     ports:
       - ${PGADMIN_PORT}:${PGADMIN_PORT}
 
@@ -140,4 +140,4 @@ services:
 volumes:
   postgres_data:
   redis_data:
-  postgres_data:
+
