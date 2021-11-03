@@ -1,18 +1,26 @@
 import {
-  AccountBalanceOutlined,
   AutoGraphOutlined,
   DashboardOutlined,
   FiberSmartRecordOutlined,
   HomeOutlined,
-  MenuOutlined,
+  MenuOutlined
 } from '@mui/icons-material';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import router, { useRouter } from 'next/router';
+import { Drawer, Typography, Box, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
-import SideDrawer from '../SideDrawer';
+import MuiNextLink from '@components/MuiNextLink';
 
-// TODO: Change these icons for more appropriate ones if available
-const navLinks = [
+const drawerLinks = [
+  { title: `About`, path: `/about` },
+  { title: 'Legal', path: '/legal' },
+  { title: 'Contact', path: '/contact' },
+  { title: 'Documentation', path: '/documentation' },
+  { title: 'Tutorials', path: '/guides' },
+  { title: 'FAQ', path: '/faq' },
+  { title: 'Legal', path: '/legal' },
+];
+
+const bottomNavLinks = [
   {
     label: 'Token',
     link: '/token',
@@ -33,38 +41,89 @@ const navLinks = [
     link: '/dashboard',
     icon: <DashboardOutlined />,
   },
-  {
-    label: 'More',
-    link: '',
-    icon: <MenuOutlined />,
-  },
 ];
 
-
-
-// Styles
 const root = { position: 'fixed', bottom: -1, width: '100vw' };
 
 const BottomNav = () => {
-  const [value, setValue] = useState('/');
   const router = useRouter();
-
+  const [state, setState] = useState({
+    left: false,
+  });
+  const [value, setValue] = useState(router.pathname);
+  
   const handleChange = (_, newValue) => {
     setValue(newValue);
     router.push(newValue);
   };
 
-  return (
-    <BottomNavigation showLabels value={value} sx={root} onChange={handleChange}>
-      {navLinks.map((link, i) => (
-        <BottomNavigationAction
-          key={`${i}_${link.label}`}
-          label={link.label}
-          value={link.link}
-          icon={link.icon}
-        />
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ width: 250, marginTop: `auto`, marginBottom: `auto` }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      {drawerLinks.map(({ title, path }, i) => (
+        <Typography
+          key={`${title}${i}`}
+          sx={{
+            ml: 5,
+            my: 2,
+          }}
+        >
+          <MuiNextLink sx={{ color: "common.white" }} href={path}>
+            {title}
+          </MuiNextLink>
+        </Typography>
       ))}
-    </BottomNavigation>
+    </Box>
+  );
+
+  return (
+    <>
+    <BottomNavigation showLabels value={value} sx={root} onChange={handleChange}>
+      {bottomNavLinks.map((link, i) => (
+          <BottomNavigationAction
+            key={`${i}_${link.label}`}
+            label={link.label}
+            value={link.link}
+            icon={link.icon}
+          />
+      ))}
+      <BottomNavigationAction
+          onClick={toggleDrawer("left", true)}
+          key='more'
+          label='More'
+          value=''
+          icon={<MenuOutlined />}
+        />
+    </BottomNavigation> 
+
+    <Drawer
+        anchor="left"
+        open={state.left}
+        onClose={toggleDrawer("left", false)}
+        sx={{
+          ".MuiDrawer-paper": {
+            
+          },
+        }}
+      >
+        {list("left")}
+      </Drawer>
+  </>
   );
 };
 

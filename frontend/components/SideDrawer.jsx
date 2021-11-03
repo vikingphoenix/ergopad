@@ -6,11 +6,12 @@ import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/icons-material/Menu";
 import MuiNextLink from "./MuiNextLink";
+import { MenuOutlined } from '@mui/icons-material';
 
 
 const SideDrawer = ({ navLinks }) => {
   const [state, setState] = useState({
-    right: false,
+    left: false,
   });
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -33,7 +34,6 @@ const SideDrawer = ({ navLinks }) => {
     >
       {navLinks.map(({ title, path }, i) => (
         <Typography
-          variannt="button"
           key={`${title}${i}`}
           sx={{
             ml: 5,
@@ -50,28 +50,22 @@ const SideDrawer = ({ navLinks }) => {
 
   return (
     <>
-      <IconButton
-        edge="start"
+      <MenuOutlined
         aria-label="menu"
-        onClick={toggleDrawer("right", true)}
-        sx={{
-          color: `common.white`,
-          display: { xs: `inline`, md: `none` },
-        }}
+        onClick={toggleDrawer("left", true)}
       >
-        <Menu fontSize="large" />
-      </IconButton>
+      </MenuOutlined>
       <Drawer
-        anchor="right"
-        open={state.right}
-        onClose={toggleDrawer("right", false)}
+        anchor="left"
+        open={state.left}
+        onClose={toggleDrawer("left", false)}
         sx={{
           ".MuiDrawer-paper": {
             
           },
         }}
       >
-        {list("right")}
+        {list("left")}
       </Drawer>
     </>
   );

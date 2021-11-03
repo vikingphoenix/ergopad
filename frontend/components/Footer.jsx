@@ -5,7 +5,6 @@ import { List, ListItem, Box, SvgIcon, IconButton } from '@mui/material';
 import { styled, useTheme } from '@mui/system';
 import theme from 'styles/theme';
 import MuiNextLink from '@components/MuiNextLink';
-// import theme from '../styles/theme';
 
 const BackgroundContainer = styled('div')(({ theme }) => ({
 	zIndex: '-100',

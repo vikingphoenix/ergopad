@@ -8,11 +8,11 @@ import { useSnackbar } from 'notistack';
 import Header from '@components/Header';
 import Footer from '@components/Footer';
 import BottomNav from '@components/navigation/BottomNav';
-import Aurora from '@components/stylistic/Aurora';
+// import Aurora from '@components/stylistic/Aurora';
 import Gradients from '@components/stylistic/Gradients';
 import makeStyledScrollbar from 'styles/makeStyledScrollbar';
 import pageTransitions from './pageTransitions';
-import { useAuth } from 'src/auth';
+// import { useAuth } from 'src/auth';
 
 const Root = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -46,13 +46,13 @@ const Layout = ({ children }) => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   // Snackbars
-  const { enqueueSnackbar } = useSnackbar();
+//  const { enqueueSnackbar } = useSnackbar();
 
   // Auth State
-  const { dispatch, authState, actions } = useAuth();
-  const { fetchUserFromToken } = actions;
+  // const { dispatch, authState, actions } = useAuth();
+//  const { fetchUserFromToken } = actions;
 
-  // Check for user auth token and log user and attempt fetching user info if available.
+/*   // Check for user auth token and log user and attempt fetching user info if available.
   useEffect(() => {
     // Wrap function so that we can await it inside the useEffect
     const _fetchUserFromToken = async (token) => {
@@ -69,7 +69,7 @@ const Layout = ({ children }) => {
     if (token && Object.keys(authState?.user) === 0) {
       _fetchUserFromToken(token);
     }
-  }, []);
+  }, []); */
   return (
     <Root>
       
