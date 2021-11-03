@@ -180,7 +180,7 @@ const Dashboard = () => {
     };
 
     const res = await axios
-      .get(`http://localhost:8000/api/asset/balance/${walletInput}`, { ...defaultOptions })
+      .get(`${process.env.API_URL}asset/balance/${walletInput}`, { ...defaultOptions })
       .catch((err) => {
         console.log('ERROR FETCHING: ', err);
       });
