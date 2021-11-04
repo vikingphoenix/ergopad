@@ -16,28 +16,28 @@ import pageTransitions from './pageTransitions';
 
 const Root = styled('div')(({ theme }) => ({
   position: 'relative',
-  top: 0,
-  left: 0,
-  height: '100vh',
-  width: '100vw',
+  // top: 0,
+  // left: 0,
+  // height: '100vh',
+  // width: '100vw',
   overflowX: 'hidden',
-  overflowY: 'hidden',
+  // overflowY: 'hidden',
 }));
 
 const PageWrapper = styled('div')(({ theme }) => ({
-  minHeight: '20vh',
-  marginBottom: theme.spacing(3),
-  [theme.breakpoints.down('md')]: {
-    marginBottom: theme.spacing(10),
-  },
-  position: 'relative',
-  width: '100vw',
-  height: '100vh',
-  overflowY: 'scroll',
-  overflowX: 'hidden',
-  [theme.breakpoints.up('md')]: {
-    ...makeStyledScrollbar(theme),
-  },
+  // minHeight: '20vh',
+   // marginBottom: theme.spacing(1),
+   [theme.breakpoints.down('md')]: {
+     marginBottom: theme.spacing(6),
+   },
+  // position: 'relative',
+  // width: '100vw',
+  // height: '100vh',
+  // overflowY: 'scroll',
+  // overflowX: 'hidden',
+  // [theme.breakpoints.up('md')]: {
+  //   ...makeStyledScrollbar(theme),
+  // },
 }));
 
 const Layout = ({ children }) => {
@@ -74,14 +74,16 @@ const Layout = ({ children }) => {
     <Root>
       
       <PageWrapper
-          as={motion.div}
+         /*  as={motion.div}
           key={router.route}
           variants={pageTransitions}
           initial='hidden'
           animate='visible'
-          exit='hidden'
+          exit='hidden' */
+          
         >
-
+        
+        
       {/* <AnimatePresence exitBeforeEnter>
         <Aurora key={router.route} />
       </AnimatePresence> */}
@@ -89,19 +91,20 @@ const Layout = ({ children }) => {
       <Box maxWidth='lg' sx={{ position: 'relative', mx: 'auto', height: '0', pointerEvents: 'none', zIndex: '-100' }} aria-hidden="true">
         <Gradients />
       </Box>
-
+      
       <Container maxWidth='lg'>
         <Header />
       </Container>
-      <Container maxWidth='lg' sx={{ minHeight: '80vh' }}>
+      <Container maxWidth='lg' sx={{ minHeight: '60vh' }}>
         {children}
       </Container>
-      <Container maxWidth='lg' sx={{ position: 'relative', pt: theme.spacing(6), pb: theme.spacing(8) }}>
+      <Container maxWidth='lg' sx={{ position: 'relative', pt: theme.spacing(6), pb: theme.spacing(3) }}>
         <Footer />
       </Container>
       
-      </PageWrapper>
       {isMobile && <BottomNav />}
+      </PageWrapper>
+      
     </Root>
   );
 };

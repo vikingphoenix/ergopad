@@ -43,7 +43,7 @@ const bottomNavLinks = [
   },
 ];
 
-const root = { position: 'fixed', bottom: -1, width: '100vw' };
+const root = { position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 1 };
 
 const BottomNav = () => {
   const router = useRouter();

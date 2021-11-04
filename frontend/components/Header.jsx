@@ -1,15 +1,7 @@
 import { AppBar, Container, Toolbar, flexbox, useTheme, useMediaQuery, Box, IconButton, Button } from '@mui/material';
 import { styled } from '@mui/system';
-// import Home from '@mui/icons-material/Home';
 import MuiNextLink from '@components/MuiNextLink';
 import Navbar from './Navbar';
-// import SideDrawer from './SideDrawer';
-// import HideOnScroll from './HideOnScroll';
-// import Fab from '@mui/material/Fab';
-// import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
-// import BackToTop from './BackToTop';
-
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 export const navLinks = [
   { title: `Home`, path: `/` },
@@ -21,7 +13,7 @@ export const navLinks = [
 
 const Header = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  // const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
