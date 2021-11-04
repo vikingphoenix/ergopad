@@ -11,8 +11,8 @@ import Layout from '@components/layout/Layout';
 // import { useSelector, useStore } from 'react-redux';
 // import { useDispatch } from 'react-redux';
 // import { SAVE_ACCESS_TOKEN_IN_STORE } from 'redux/auth';
-import { ProvideAuth, useAuth } from 'src/auth';
-import { SnackbarProvider } from 'notistack';
+// import { ProvideAuth, useAuth } from 'src/auth';
+// import { SnackbarProvider } from 'notistack';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -34,15 +34,15 @@ function MyApp(props) {
       {/* MUI Theme Provider */}
       <ThemeProvider theme={theme}>
         
-          <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} maxSnack={3} dense>
+          {/* <SnackbarProvider anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} maxSnack={3} dense> */}
             {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
             <CssBaseline />
-            <ProvideAuth>
+            {/* <ProvideAuth> */}
               <Layout>
                 <Component {...pageProps} />
               </Layout>
-            </ProvideAuth>
-          </SnackbarProvider>
+            {/* </ProvideAuth> */}
+         {/*  </SnackbarProvider> */}
         
       </ThemeProvider>
     </CacheProvider>

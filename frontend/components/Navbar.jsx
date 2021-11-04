@@ -1,7 +1,4 @@
-import { useMediaQuery } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import Toolbar from '@mui/material/Toolbar';
-import { useTheme } from '@mui/material';
+import { useMediaQuery, Stack, Toolbar, useTheme } from '@mui/material';
 import MuiNextLink from './MuiNextLink';
 import ErgoDashLogo from './stylistic/ErgoDash';
 
@@ -9,20 +6,8 @@ const Navbar = ({ navLinks }) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   return (
-    <Toolbar
-      component='nav'
-      // REMOVE THIS COMMENT IF YOU PLACE LOGO
-      sx={{
-        paddingLeft: 0,
-        marginLeft: 0,
-      }}
-    >
-      <Stack direction='row' spacing={4} sx={{ display: 'flex', alignItems: 'center' }}>
-        {/*  TEMP LOGO THAT I DIDN"T END UP LIKING. (AQUISTOY) */}
-        {/* <MuiNextLink href={'/'} variant='button' underline='none'>
-          <ErgoDashLogo />
-        </MuiNextLink> */}
-
+    
+      <Stack direction='row' spacing={4} sx={{ display: 'flex', alignItems: 'center', flexGrow: 1, height: '5rem', py: 'auto' }}>
         {!isMobile && (
           <>
             {navLinks.map(({ title, path }, i) => (
@@ -38,8 +23,7 @@ const Navbar = ({ navLinks }) => {
                   textTransform: 'none',
                   fontWeight: '500',
                   fontSize: '1rem',
-                  px: '0.5rem',
-                  py: '2rem'
+                  px: '0.5rem'
                 }}
                 underline='none'
               >
@@ -49,7 +33,7 @@ const Navbar = ({ navLinks }) => {
           </>
         )}
       </Stack>
-    </Toolbar>
+
   );
 };
 

@@ -4,7 +4,7 @@ import { Grid, Typography, TextField, Box, Button } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import { VictoryArea, VictoryContainer, VictoryPie } from 'victory';
 import axios from 'axios';
-import { useAuth } from 'src/auth';
+// import { useAuth } from 'src/auth';
 
 const rawData = 
 {
@@ -153,7 +153,7 @@ const defaultHoldingData = wantedHoldingData.map((item) => {
 defaultHoldingData[defaultHoldingData.length - 1].y = portfolioValue;
 
 const Dashboard = () => {
-  const auth = useAuth();
+  // const auth = useAuth();
   const [holdingData, setHoldingData] = useState(defaultHoldingData);
   const [walletInput, setWalletInput] = useState('');
   const [assetList, setAssetList] = useState(assetListArray(rawData));
@@ -175,12 +175,12 @@ const Dashboard = () => {
     const defaultOptions = {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: auth?.accessToken ? `Bearer ${auth.accessToken}` : '',
+        // Authorization: auth?.accessToken ? `Bearer ${auth.accessToken}` : '',
       },
-    };
+    }; 
 
     const res = await axios
-      .get(`http://localhost:8000/api/asset/balance/${walletInput}`, { ...defaultOptions })
+      .get(`${process.env.API_URL}/asset/balance/${walletInput}`, { ...defaultOptions })
       .catch((err) => {
         console.log('ERROR FETCHING: ', err);
       });
